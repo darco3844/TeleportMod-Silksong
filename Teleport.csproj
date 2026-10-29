@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <!-- Set HollowKnightPath to the game install directory when building. -->
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <Version>1.2.2</Version>
