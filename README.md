@@ -37,6 +37,7 @@ During cross-scene teleportation, if the teleport key combination includes the m
 - `Alt + 1~5`: Quick load position (no save data: auto teleport to bench)
 - `Alt + 6`: **Safe respawn** (cycle entry points)
 - `Alt + 7`: **Teleport to bench** (last respawn point)
+- `Alt + 9`: **Teleport to the fixed bench at the bottom of the Abyss**
 - `Alt + 0`: **Reset all coordinates**
 - `Alt + - [minus key]`: **Emergency teleport** (to preset safe location) 
 - 🌟 ``Ctrl + ` [tilde key]``: **Open Teleport Interface** - Unlimited save slots with UI support for save, load, delete, overwrite, bench teleport, reset coordinates, safe respawn, and more
@@ -189,6 +190,7 @@ If all methods fail, you can **manually edit the save file** with this safe conf
 - `Slot 1-5 Keys` (default: `Alpha1-5`): Keys for save slots
 - `Safe Respawn Key` (default: `Alpha6`): Key for safe respawn function
 - `Bench Teleport Key` (default: `Alpha7`): Key for bench teleport function
+- `Abyss Bench Teleport Key` (default: `Alpha9`): Key for the fixed Abyss bench (used with the teleport modifier)
 - `Emergency Teleport Key` (default: `Minus`): Key for emergency teleport function
 - `Reset All Key` (default: `Alpha0`): Key for reset all function
 
