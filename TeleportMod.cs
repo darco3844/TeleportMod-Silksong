@@ -61,6 +61,7 @@ public class TeleportMod : BaseUnityPlugin
     private static ConfigEntry<string>? resetAllKey;
     private static ConfigEntry<string>? hardcodedTeleportKey;
     private static ConfigEntry<string>? benchTeleportKey;
+    private static ConfigEntry<string>? abyssBenchTeleportKey;
 
     // 音效设置
     private static ConfigEntry<float>? audioVolume;
@@ -359,6 +360,8 @@ public class TeleportMod : BaseUnityPlugin
             "键盘传送到预设坐标的按键。默认是减号键(-) | Keyboard key for teleporting to preset coordinates. Default is minus key (-)");
         benchTeleportKey = Config.Bind("键盘特殊功能 | Keyboard Special", "键盘椅子传送 | Keyboard Bench Teleport", "Alpha7",
             "键盘传送到椅子（最后重生点）的按键 | Keyboard key for teleporting to bench (last respawn point)");
+        abyssBenchTeleportKey = Config.Bind("键盘特殊功能 | Keyboard Special", "键盘深渊椅子传送 | Keyboard Abyss Bench Teleport", "Alpha9",
+            "键盘传送到深渊固定椅子的按键 | Keyboard key for teleporting to the fixed Abyss bench");
 
         Logger?.LogInfo("Teleport Mod 已加载!");
 
@@ -830,6 +833,13 @@ public class TeleportMod : BaseUnityPlugin
             if (benchTeleportKeyCode != KeyCode.None && Input.GetKeyDown(benchTeleportKeyCode))
             {
                 TeleportToBench();
+                return;
+            }
+
+            KeyCode abyssBenchTeleportKeyCode = ParseKeyCode(abyssBenchTeleportKey?.Value ?? "Alpha9");
+            if (abyssBenchTeleportKeyCode != KeyCode.None && Input.GetKeyDown(abyssBenchTeleportKeyCode))
+            {
+                TeleportToAbyssBench();
                 return;
             }
         }
@@ -1632,6 +1642,36 @@ public class TeleportMod : BaseUnityPlugin
         catch (Exception ex)
         {
             Logger?.LogError($"执行硬编码传送时发生错误: {ex.Message}");
+        }
+    }
+
+    // Alt+9 功能：传送到深渊底部的固定椅子坐标
+    private void TeleportToAbyssBench()
+    {
+        try
+        {
+            if (HeroController.instance == null || GameManager.instance == null)
+            {
+                Logger?.LogWarning("HeroController 或 GameManager 未找到，无法传送到深渊椅子");
+                return;
+            }
+
+            Vector3 targetPosition = new Vector3(64.3553f, 72.56767f, 0.004f);
+            const string targetScene = "Shadow_02";
+            LogInfo($"执行传送到深渊椅子: {targetPosition} 在场景: {targetScene}");
+
+            if (GameManager.instance.sceneName != targetScene)
+            {
+                StartCoroutine(TeleportWithSceneChange(targetScene, targetPosition));
+            }
+            else
+            {
+                PerformTeleport(targetPosition);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger?.LogError($"传送到深渊椅子时发生错误: {ex.Message}");
         }
     }
 
